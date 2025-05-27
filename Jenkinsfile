@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "node16" // Tên đã cấu hình trong Jenkins
+        nodejs "node24" // Tên đã cấu hình trong Jenkins
     }
 
     stages {
