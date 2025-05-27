@@ -26,9 +26,9 @@ test('test', async ({ page }) => {
   // Bỏ chọn nếu có hộp thoại 2FA
   // Click bỏ popup
   const dialogSpan = page.getByRole('dialog').locator('span').nth(3);
-  await expect(dialogSpan).toBeVisible(); // Đảm bảo hiển thị
-  await dialogSpan.click();
-
+  if (await dialogSpan.isVisible()) {
+      await dialogSpan.click();
+  }
   await page.getByText('Đặt lệnh').click();
 
   // === LẤY TỌA ĐỘ OTP MATRIX ===
