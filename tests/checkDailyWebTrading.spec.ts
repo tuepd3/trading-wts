@@ -59,8 +59,15 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Đặt lệnh' }).click();
   await page.getByRole('button', { name: 'Xác nhận' }).click();
 
-  // === HUỶ LỆNH ===
+  const messageError = await page.locator('#root div').filter({ hasText: 'Đặt lệnh không thành côngError: Hệ thống sẽ nhận lệnh cho ngày giao dịch tiếp' }).nth(2);
+  if (await messageError.isVisible()) {
+        const text = await messageError.textContent(); // hoặc .innerText()
+        console.log('Message error:', text);
+  }else{
+    // === HUỶ LỆNH ===
   await page.getByText('Sổ lệnh').click();
   await page.locator('td:nth-child(14) > div > span:nth-child(2) > .icon').first().click();
   await page.getByRole('button', { name: 'Xác nhận' }).click();
+  }
+
 });
