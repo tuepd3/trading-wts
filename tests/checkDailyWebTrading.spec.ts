@@ -17,6 +17,7 @@ function getMatrixCode(coord) {
 }
 
 test('test', async ({ page }) => {
+  
   await page.goto('https://trade.pinetree.vn/#/home/bang-gia/vn30');
   await page.getByRole('button', { name: 'Đăng nhập' }).click();
   await page.getByPlaceholder('Tên đăng nhập').fill('Tuepd1');
@@ -54,7 +55,11 @@ test('test', async ({ page }) => {
   // await page.getByText('11.7').dblclick();
   const count = await page.locator('span.cursor-pointer.f').count();
   console.log('Số phần tử có class cursor-pointer f:', count);
-  await page.locator('span.cursor-pointer.f').dblclick();
+  const target = page.locator('span.cursor-pointer.f');
+  await expect(target).toHaveCount(1); // Đảm bảo có đúng 1 phần tử
+  await target.scrollIntoViewIfNeeded(); // Kéo vào view
+  await expect(target).toBeVisible(); // Chắc chắn thấy được
+  await target.dblclick(); // Rồi mới dblclick
   await page.getByPlaceholder('KL x1').fill('1');
   await page.getByRole('button', { name: 'Đặt lệnh' }).click();
   await page.getByRole('button', { name: 'Xác nhận' }).click();
