@@ -26,7 +26,7 @@ test('test', async ({ page }) => {
   await page.waitForTimeout(5000);
   // Bỏ chọn nếu có hộp thoại 2FA
   // Click bỏ popup
-  const dialogSpan = page.getByRole('dialog').locator('span').nth(3);
+  const dialogSpan = page.locator('span.btn-icon.btn--light > span.icon.iClose');
   if (await dialogSpan.isVisible()) {
       await dialogSpan.click();
   }
@@ -51,7 +51,13 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Xác nhận' }).click();
 
   // === ĐẶT LỆNH ===
-  await page.getByPlaceholder('Mã CK', { exact: true }).fill('CEO');
+  // Danh sách mã cổ phiếu
+  const stockCodes = ['MBG', 'TTH', 'ITQ', 'HDA', 'NSH', 'VHE', 'CET', 'KSD'];
+  // Random 1 mã bất kỳ
+  const randomCode = stockCodes[Math.floor(Math.random() * stockCodes.length)];
+  // Điền vào ô input "Mã CK"
+  await page.getByPlaceholder('Mã CK', { exact: true }).fill(randomCode);
+  // await page.getByPlaceholder('Mã CK', { exact: true }).fill('CEO');
   // await page.getByText('11.7').dblclick();
   const count = await page.locator('span.cursor-pointer.f').count();
   console.log('Số phần tử có class cursor-pointer f:', count);
